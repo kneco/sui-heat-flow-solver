@@ -1,0 +1,4 @@
+P g0 "len" "hello"
+. g0
+P g1 "math.sqrt" 16
+. g1

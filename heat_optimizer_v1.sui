@@ -1,0 +1,125 @@
+; Heat source optimizer in Sui language
+; Step 1: Linear interpolation for heat pump power consumption
+
+; Function 0: Linear interpolation
+; Input: a0 = load rate (0-100)
+; Output: return value = power consumption
+; Uses global array g0 for load characteristic table
+; g0[0]=0%, g0[1]=20%, g0[2]=40%, g0[3]=60%, g0[4]=80%, g0[5]=100%
+
+# 0 1 {
+; Check if load is 0
+~ v0 a0 0
+? v0 1
+; Check if load is 20
+~ v1 a0 20
+? v1 2
+; Check if load is 40
+~ v2 a0 40
+? v2 3
+; Check if load is 60
+~ v3 a0 60
+? v3 4
+; Check if load is 80
+~ v4 a0 80
+? v4 5
+; Check if load is 100
+~ v5 a0 100
+? v5 6
+; If between 0-20
+< v6 a0 20
+? v6 7
+; If between 20-40
+< v7 a0 40
+? v7 8
+; If between 40-60
+< v8 a0 60
+? v8 9
+; If between 60-80
+< v9 a0 80
+? v9 10
+; If between 80-100
+@ 11
+: 1
+] v10 g0 0
+^ v10
+: 2
+] v11 g0 1
+^ v11
+: 3
+] v12 g0 2
+^ v12
+: 4
+] v13 g0 3
+^ v13
+: 5
+] v14 g0 4
+^ v14
+: 6
+] v15 g0 5
+^ v15
+: 7
+; Interpolate between 0-20
+] v16 g0 0
+] v17 g0 1
+- v18 v17 v16
+/ v19 v18 20
+* v20 v19 a0
++ v21 v16 v20
+^ v21
+: 8
+; Interpolate between 20-40
+- v22 a0 20
+] v23 g0 1
+] v24 g0 2
+- v25 v24 v23
+/ v26 v25 20
+* v27 v26 v22
++ v28 v23 v27
+^ v28
+: 9
+; Interpolate between 40-60
+- v29 a0 40
+] v30 g0 2
+] v31 g0 3
+- v32 v31 v30
+/ v33 v32 20
+* v34 v33 v29
++ v35 v30 v34
+^ v35
+: 10
+; Interpolate between 60-80
+- v36 a0 60
+] v37 g0 3
+] v38 g0 4
+- v39 v38 v37
+/ v40 v39 20
+* v41 v40 v36
++ v42 v37 v41
+^ v42
+: 11
+; Interpolate between 80-100
+- v43 a0 80
+] v44 g0 4
+] v45 g0 5
+- v46 v45 v44
+/ v47 v46 20
+* v48 v47 v43
++ v49 v44 v48
+^ v49
+}
+
+; Initialize load characteristic table
+; Example: [5.0, 8.0, 12.0, 18.0, 25.0, 35.0]
+[ g0 6
+{ g0 0 5.0
+{ g0 1 8.0
+{ g0 2 12.0
+{ g0 3 18.0
+{ g0 4 25.0
+{ g0 5 35.0
+
+; Test: Calculate power at 50% load
+= g1 50
+$ g2 0 g1
+. g2

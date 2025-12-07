@@ -1,0 +1,5 @@
+time,t2,F2,total_heat_load,total_power,hp1_load,hp1_power,hp2_load,hp2_power,pump1_load,pump1_power,pump2_load,pump2_power
+202512071900,12.0,600.0,,,,,,,,,
+202512072000,15.0,450.0,,,,,,,,,
+202512072100,10.0,800.0,,,,,,,,,
+202512072200,14.0,550.0,,,,,,,,,

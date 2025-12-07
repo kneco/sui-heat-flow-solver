@@ -1,0 +1,21 @@
+# 0 2 {
+= v0 7.0
+- v1 a0 v0
+/ v2 a1 60
+* v3 v2 1.0
+= v4 4.186
+* v5 v3 v4
+* v6 v5 v1
+^ v6
+}
+~ v0 g100 0
+? v0 0
+= g0 g101
+@ 1
+: 0
+= g0 "202512071900"
+: 1
+P g2 "heat_solver_utils.read_timeseries_t2" "timeseries.csv" g0
+P g3 "heat_solver_utils.read_timeseries_f2" "timeseries.csv" g0
+$ g4 0 g2 g3
+P g5 "heat_solver_utils.write_timeseries" "timeseries.csv" g0 g4
